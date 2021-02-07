@@ -42,12 +42,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Login() {
+function SignIn() {
   const classes = useStyles();
 
   return (
     <div>
-      <NavBar />
+      <NavBar value={1}/>
     <Container component="main" maxWidth="xs">
       
       <CssBaseline />
@@ -116,4 +116,4 @@ function Login() {
   );
 }
 
-export default Login
+export default SignIn

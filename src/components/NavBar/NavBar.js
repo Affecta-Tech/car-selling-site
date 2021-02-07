@@ -61,17 +61,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-let NavBar = () => {
+let NavBar = (props) => {
   const classes = useStyles();
   return (
-      <AppBar position="relative">
-        <Tabs>
-        <Tab label='Home'  to='/' component={Link} /> 
-        <Tab label='Sign In'  to='/signin' component={Link} /> 
-          <Tab label='Sign Up'  to='/signup' component={Link} /> 
-          <Tab label='Checkout'  to='/checkout' component={Link} /> 
+      <AppBar position="relative" style={{alignItems:'center'}}>
+        <Tabs value={props.value}>
+        <Tab value={0} label='Home'  to='/' component={Link} /> 
+        <Tab value={1} label='Sign In'  to='/signin' component={Link} /> 
+        <Tab value={2} label='Sign Up'  to='/signup' component={Link} /> 
+        <Tab value={3} label='Checkout'  to='/checkout' component={Link} /> 
         </Tabs>
       </AppBar>
   );

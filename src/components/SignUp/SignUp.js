@@ -51,7 +51,7 @@ function SignUp() {
 
   return (
       <div>
-          <NavBar />
+          <NavBar value={2}/>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>

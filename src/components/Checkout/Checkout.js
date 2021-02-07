@@ -14,6 +14,7 @@ import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
 import NavBar from '../NavBar/NavBar.js'
+import queryString from 'query-string';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -80,6 +81,7 @@ function getStepContent(step) {
 }
 
 function Checkout() {
+  let carID = window.location.search.split("id=")[1]
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -93,12 +95,12 @@ function Checkout() {
 
   return (
     <React.Fragment>
-    <NavBar></NavBar>
+    <NavBar value={3}></NavBar>
       <CssBaseline />
       <AppBar position="absolute" color="default" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>
-            Company name
+            Car ID: {carID}
           </Typography>
         </Toolbar>
       </AppBar>
