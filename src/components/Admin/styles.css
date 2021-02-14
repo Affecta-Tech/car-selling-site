@@ -1,0 +1,26 @@
+.download-arrow{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+    font-size: 48px;
+    font-weight: 600;
+}
+
+.drag-container{
+    margin-left: 180px;
+    width: 500px;
+    height: 300px;
+    box-shadow: 7px 7px 7px -8px rgba(0,0,0,0.4);
+}
+
+.drag-container:hover{
+    width: 500px;
+    height: 300px;
+    box-shadow: 7px 7px 7px -8px rgba(0,0,0,0.9);
+}
+.charts{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    
+}

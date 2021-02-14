@@ -18,7 +18,8 @@ import React, {
   import { useHistory } from "react-router-dom";
   import { makeStyles } from '@material-ui/core/styles';
   import Chart from "react-apexcharts";
-  
+  import DragDrop from "./DragDrop"
+
   
   function AddCar() {
     return (
@@ -27,7 +28,7 @@ import React, {
             <div style={{marginLeft:"180px"}}>
                 <span>Still gotta make this, but don't worry it's ez af lol</span>
             </div>
-           
+            <DragDrop />
         </div>
     );
   }

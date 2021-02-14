@@ -18,10 +18,7 @@ import AdminNavBar from './AdminNavBar'
 import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Chart from "react-apexcharts";
-
-
-
-
+import './styles.css';
 
 function Dashboard() {
   const useStyles = makeStyles((theme) => ({
@@ -305,13 +302,16 @@ var heatMapOptions = {
     flexDirection: "row",
     flexWrap: "wrap",width:"80vw"}}>
       <CssBaseline />
-        <div style={{display:"flex", flexDirection: "row", flexWrap: "wrap",width:"100%"}}>
+        <div style={{display:"flex", flexDirection: "row", flexWrap: "wrap",width:"100%",marginTop:"20px"}}>
+        <div className="charts">
         <Chart 
         options={lineData.options} 
         series={lineData.series} 
         type="line" height={350} 
         width={500} 
         />
+        </div>
+        <div className="charts">
         <Chart
         options={barData.options}
         series={barData.series}
@@ -320,7 +320,9 @@ var heatMapOptions = {
         width={500}
         />
         </div>
-        <div style={{display:"flex", flexDirection: "row", flexWrap: "wrap",width:"100%"}}>
+        </div>
+        <div style={{display:"flex", flexDirection: "row", flexWrap: "wrap",width:"100%",marginBottom:"20px"}}>
+        <div className="charts">
         <Chart 
         options={heatMapOptions.plotOptions} 
         series={heatMapOptions.series} 
@@ -328,6 +330,8 @@ var heatMapOptions = {
         height={350} 
         width={500}
         />
+        </div>
+        <div className="charts">
         <Chart 
         options={pieData.options} 
         series={pieData.series} 
@@ -336,7 +340,9 @@ var heatMapOptions = {
         width={500}
         />
         </div>
+        </div>
    </div>
+   
 </div>
   );
 }
