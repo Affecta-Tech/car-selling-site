@@ -15,6 +15,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
+import Avatar from '@material-ui/core/Avatar';
+import LockOutlinedIcon from '@material-ui/icons/PersonSharp';
 
 function Copyright() {
   return (
@@ -61,18 +63,34 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-let NavBar = (props) => {
+let AdminNavBar = (props) => {
   const classes = useStyles();
   return (
-      <AppBar position="relative" style={{alignItems:'center'}}>
-        <Tabs value={props.value}>
+      <AppBar position=""         
+      style={{
+        width:"162px",
+        height:"100vh",
+        position:"fixed"
+        }}>
+        <Tabs orientation="vertical" value={props.value}>
+          <div style={{        
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            margin: "auto",
+            height: "100px",
+            width: "100%"
+            }}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+          </div>
         <Tab value={0} label='Home'  to='/' component={Link} /> 
-        <Tab value={1} label='Sign In'  to='/signin' component={Link} /> 
-        <Tab value={2} label='Sign Up'  to='/signup' component={Link} /> 
-        <Tab value={3} label='Checkout'  to='/checkout' component={Link} /> 
-        <Tab value={4} label='Admin'  to='/admin-portal' component={Link} /> 
+        <Tab value={1} label='Add Car'  to='/admin-add' component={Link} /> 
+        <Tab value={2} label='Analytics'  to='/admin-dash' component={Link} /> 
+        <Tab value={3} label='Log Out'  to='/admin-portal' component={Link} /> 
         </Tabs>
       </AppBar>
   );
 }
-export default NavBar;
+export default AdminNavBar;
