@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './styles.css';
 
 
-const DropArea = (props) => {
+const DropArea = (props,id) => {
   const [data, setData] = useState(false);
   const [imageUpload, setImageUpload] = useState('');
   const [imageName, setImageName] = useState('');
@@ -57,85 +57,46 @@ const DropArea = (props) => {
     
     for(i in e.dataTransfer.files){
       if (typeof(e.dataTransfer.files[i]) === "object" ){
-      console.log("uploadToDataset uploadToDataset uploadToDataset uploadToDataset", props.uploadToDataset)
+      console.log(e.dataTransfer.files[i])
 
-        console.log(e.dataTransfer.files[i])
-
-
-           
       // Create an object of formData 
       const formData = new FormData(); 
 
       // Update the formData object 
       formData.append( 
-        "uploaded_file", 
+        "upload_data", 
         e.dataTransfer.files[i]
       ); 
-     
       // Details of the uploaded file 
       setImageName((e.dataTransfer.files[i].name)); 
-
-      // Request made to the backend api 
-      // Send formData object 
-    //   axios.post("api/uploadfile", formData); 
-    //I tried this, Use FETCH instead
-        //  const uploadFile = (formData, dataset_id)  => {
-        //     const fetchData = async () => {
-        //       const result = await fetch(`${BASE_URL}/storage_client/storage/upload_file?dataset_id=${dataset_id}`, {
-        //         headers: {
-        //           Accept: 'application/json', token: API_TOKEN
-        //         },body: formData, method: "POST", credentials: 'same-origin'
-        //       });
-        //       let response = await result.json();
-        //       setImageTask(response.taskId)
-        //       await sleep(2000)
-        //       setImageUpload('')
-        //       setImageDone('Upload Complete')
-        //       return response
-        //     }
-        //     return fetchData()
-        //   }
-        //   // hard coding dataset_id for now until I get formData to work
+        console.log(id)
+        console.log("PROPS ",props.id)
+         const uploadFile = (formData)  => {
+            const fetchData = async () => {
+              const result = await fetch(`http://localhost:8080/cars/upload_photo?id=${props.id}&name=${e.dataTransfer.files[i].name}`, {
+                headers: {
+                  Accept: 'application/json'
+                },body: formData, method: "POST", credentials: 'same-origin'
+              });
+              let response = await result.json();
+              setImageTask(response)
+              await sleep(2000)
+              setImageUpload('')
+              setImageDone('Upload Complete')
+              return response
+            }
+            return fetchData()
+          }
+          // hard coding dataset_id for now until I get formData to work
           
-        //   uploadFile(formData, props.uploadToDataset)
+          uploadFile(formData)
           
       } else {
         return "Choose a dataset"
       }
     }
-  
-    // console.log(e.dataTransfer.files)
-
-
-
-
-    // const {
-    //   dataTransfer: { files }
-    // } = e;
-    // const { length } = files;
-    // const reader = new FileReader();
-    // if (length === 0) {
-    //   return false;
-    // }
-    // const fileTypes = ["image/jpeg", "image/jpg", "image/png", "zipfile/zip"];
-    // const { size, type } = files[0];
-
-    // if (size / 1024 / 1024 > 2) {
-    //   setErr("File size exceeded the limit of 2MB");
-    //   return false;
-    // }
-    // setErr(false);
-
-    // reader.readAsDataURL(files[0]);
-    // reader.onload = loadEvt => {
-      
-    //   setData(loadEvt.target.result);
-    //   console.log(loadEvt.target)
-    // };
   };
-  // const onDragStart = e => {
-  //   e.preventDefault();
-  // };
+
   const onDragOver = e => {
     e.preventDefault();
   };

@@ -1,14 +1,11 @@
-import logo from './logo.svg';
 import Landing from './components/Landing/Landing.js'
 import Checkout from './components/Checkout/Checkout.js'
-import PaymentForm from './components/Checkout/PaymentForm.js'
-import AddressForm from './components/Checkout/AddressForm.js'
 import SignIn from './components/SignIn/SignIn.js'
 import SignUp from './components/SignUp/SignUp.js'
 import Admin from "./components/Admin/Admin.js"
 import Dashboard from "./components/Admin/Dashboard.js"
 import AddCar from "./components/Admin/AddCar"
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 function App() {
   return (
     <main>

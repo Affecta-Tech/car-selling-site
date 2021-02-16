@@ -1,19 +1,8 @@
 import React, {
-  useEffect,
   useState
 } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import AdminNavBar from './AdminNavBar'
 import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
@@ -41,24 +30,17 @@ function Dashboard() {
     },
   }));
   const classes = useStyles();
-  const [errorMessage, setErrorMessage] = useState("")
-  const [carYear, setCarYear] = useState("")
+  // const [errorMessage, setErrorMessage] = useState("")
+  // const [carYear, setCarYear] = useState("")
     const history = useHistory();
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-
-    </Typography>
-  );
-}
 
 
-var SubmitLogin = (e) => {
-  e.preventDefault()
-  setErrorMessage("")
-  console.log(e.target.email.value)
-  console.log(e.target.password.value)
-  submiter(e.target.email.value, e.target.password.value).then(res=>res.message=="Success"?history.push("/admin-dash"):setErrorMessage("Login Failed"))
+// var SubmitLogin = (e) => {
+//   e.preventDefault()
+//   setErrorMessage("")
+//   console.log(e.target.email.value)
+//   console.log(e.target.password.value)
+//   submiter(e.target.email.value, e.target.password.value).then(res=>res.message=="Success"?history.push("/admin-dash"):setErrorMessage("Login Failed"))
   
 
 //   fetch(`http://localhost:8080/cars/admin`, {
@@ -73,23 +55,23 @@ var SubmitLogin = (e) => {
 //     credentials: 'same-origin'}).then(res => console.log(res))
 // .then(res => console.log(res))
 // .catch(err => console.log(err))
-}
-var submiter = (username,pw) => {
-  const fetchData = async () => {
-    const result = await fetch(`http://localhost:8080/cars/admin`, {
-      headers: {
-        Accept: 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({"username":username,
-      "pw":pw}),
-      method: "POST", credentials: 'same-origin'
-    });
-    let response = await result.json();
-    return response
-  }
-  return fetchData()
-} 
+// }
+// var submiter = (username,pw) => {
+//   const fetchData = async () => {
+//     const result = await fetch(`http://localhost:8080/cars/admin`, {
+//       headers: {
+//         Accept: 'application/json, text/plain, */*',
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify({"username":username,
+//       "pw":pw}),
+//       method: "POST", credentials: 'same-origin'
+//     });
+//     let response = await result.json();
+//     return response
+//   }
+//   return fetchData()
+// } 
 var lineData = {
   series: [{
     name: "Session Duration",

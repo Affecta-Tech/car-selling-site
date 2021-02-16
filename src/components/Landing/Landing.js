@@ -4,12 +4,10 @@ import React, {
 } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
-import CameraIcon from '@material-ui/icons/PhotoCamera';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -19,16 +17,11 @@ import NavBar from '../NavBar/NavBar.js'
 import { Link } from 'react-router-dom'
 import Pagination from '@material-ui/lab/Pagination';
 import Dialog from '@material-ui/core/Dialog';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItem from '@material-ui/core/ListItem';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
@@ -64,6 +57,8 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(6),
   },
 }));
+
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction = "up"
   ref = {
@@ -76,22 +71,37 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 let Landing = () => {
   const [cars, setCars] = useState([])
+  const [listing, setListing] = useState("")
   const [totalPages, setTotalPages] = useState(1)
+  const [carImageNum, setCarImageNum] = useState(1)
   const [page, setPage] = useState(1)
   const [resultMessage, setResultMessage] = useState("")
   const [carYear, setCarYear] = useState("")
   const [pageLimit, setPageLimit] = useState(10)
   const [carColor, setCarColor] = useState("")
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
-      setOpen(true);
+  const handleClickOpen = (item) => {
+   setCarImageNum(1)
+   setOpen(true)
   };
+  var createListing = (item) => {
 
+  }
   const handleClose = () => {
+      setCarImageNum(1)
       setOpen(false);
   };
-
+  var pics = [
+   {
+       name: "Random Name #1",
+       description: "Probably the most random thing you have ever seen!"
+   },
+   {
+       name: "Random Name #2",
+       description: "Hello World!"
+   }
+]
   var getCars = () => {
       fetch(`http://localhost:8080/cars/?page=${page}&limit=${pageLimit}&color=${carColor}&year=${carYear}`, {
               method: 'get',
@@ -104,12 +114,14 @@ let Landing = () => {
               console.log(res)
               setResultMessage(res.results)
               setCars(res.results.data)
+              setListing(cars[0])
               setTotalPages(res.results.count)
           })
           .catch(err => console.log(err))
 
 
   }
+  
   const classes = useStyles();
 
   const pageLimitChange = (event) => {
@@ -121,12 +133,13 @@ let Landing = () => {
   const carYearChange = (event) => {
       setCarYear(event.target.value);
   }
+
   useEffect(() => {
     getCars()
   }, [page, pageLimit, carColor, carYear]);
 
   return (
-    <React.Fragment>
+<React.Fragment>
    <NavBar value={0}/>
    <main>
       <div className={classes.heroContent}>
@@ -229,7 +242,7 @@ let Landing = () => {
       fuelType
       vin */}
       {
-      resultMessage == undefined?
+      resultMessage === undefined?
       <div>
          <br></br>
          <br></br>
@@ -248,7 +261,7 @@ let Landing = () => {
                <Card className={classes.card}>
                   <CardMedia
                      className={classes.cardMedia}
-                     image="https://images.pexels.com/photos/2071/broken-car-vehicle-vintage.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                     image={item.imgs[0]}
                      title="Image title"
                      />
                   <CardContent className={classes.cardContent}>
@@ -295,49 +308,58 @@ let Landing = () => {
                      </Typography>
                   </CardContent>
                   <CardActions>
-                     <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                     <Button variant="outlined" color="primary" onClick={() =>{setOpen(true); setListing(item)}}>
                      View
                      </Button>
+                     {                       
+                     listing === "" || listing=== undefined?
+                     <div></div>
+                     :
                      <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
                         <AppBar className={classes.appBar}>
                            <Toolbar>
-                              <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+                              <IconButton edge="start" color="inherit" onClick={() =>
+                                 {setOpen(false);setCarImageNum(1)}} aria-label="close">
                                  <CloseIcon />
                               </IconButton>
                               <Typography variant="h6" className={classes.title}>
-                                 {item._id}
+                                 {listing._id}
                               </Typography>
-                              <Link autoFocus color="inherit" onClick={handleClose} to={{
+                              <Link autoFocus color="" onClick={() =>
+                              {setOpen(false);setCarImageNum(1)}} to={{
                               pathname: '/checkout',
-                              search: `?id=${item._id}`,}}>
+                              search: `?id=${listing._id}`,}}>
+                              <Button>                                                                           
                               Buy
+                              </Button>
                               </Link>
                            </Toolbar>
                         </AppBar>
-                        <Card className={classes.card} style={{overflow:'auto'}}>
-                           <CardMedia
-                              className={classes.cardMedia}
-                              image="https://images.pexels.com/photos/2071/broken-car-vehicle-vintage.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                              title="Image title"
-                              />
+                        <Card className={classes.card} style={{display:"block",overflow:'auto'}}>
+                           <img style={{marginTop:"63px",width:"100%",height:"auto"}} src={listing.imgs[carImageNum-1]} ></img>
+                              <div style={{display:"flex", justifyContent:"center"}}>
+                              <Pagination count={listing.imgs.length} page={carImageNum} onChange={(event,val)=>
+                              {setCarImageNum(val)}
+                              } color="primary" showFirstButton showLastButton/>
+                              </div>
                            <CardContent className={classes.cardContent}>
                               <Typography gutterBottom variant="h5" component="h2">
-                                 {item.year} {item.make} {item.model}
+                                 {listing.year} {listing.make} {listing.model}
                               </Typography>
                               <Typography>
-                                 {item.sold === false?"Available":"Sold"}
+                                 {listing.sold === false?"Available":"Sold"}
                               </Typography>
                               <Typography>
-                                 Color: {item.color}
+                                 Color: {listing.color}
                               </Typography>
                               <Typography>
-                                 description: {item.description}          
+                                 description: {listing.description}          
                               </Typography>
                               <Typography>
-                                 drivetrain: {item.drivetrain}
+                                 drivetrain: {listing.drivetrain}
                               </Typography>
                               <Typography>
-                                 Features: {item.features.map((feature,featureIndex) => 
+                                 Features: {listing.features.map((feature,featureIndex) => 
                                  <span key={featureIndex}>
                                  {/* We need a break tag until we add the css to create line breaks */}
                                  <br></br>
@@ -345,26 +367,27 @@ let Landing = () => {
                                  </span>)}
                               </Typography>
                               <Typography>
-                                 city mpg: {item.mpg.city}
+                                 city mpg: {listing.mpg.city}
                               </Typography>
                               <Typography>
-                                 highway mpg: {item.mpg.highway}
+                                 highway mpg: {listing.mpg.highway}
                               </Typography>
                               <Typography>
-                                 price: {item.price.$numberDecimal}
+                                 price: {listing.price.$numberDecimal}
                               </Typography>
                               <Typography>
-                                 transmission: {item.transmission}
+                                 transmission: {listing.transmission}
                               </Typography>
                               <Typography>
-                                 fuelType: {item.fuelType}
+                                 fuelType: {listing.fuelType}
                               </Typography>
                               <Typography>
-                                 engine: {item.engine}
+                                 engine: {listing.engine}
                               </Typography>
                            </CardContent>
                         </Card>
                      </Dialog>
+                     }
                   </CardActions>
                </Card>
             </Grid>
@@ -373,14 +396,14 @@ let Landing = () => {
       </Container>
       }
       {
-      totalPages == 1?
+      totalPages === 1?
       <div style={{display:"flex", justifyContent:"center"}}>
       <Pagination count={1} page={page} onChange={(event,val)=>
-      setPage(val)} color="primary" showFirstButton showLastButton/>
+      setPage(val)} co  lor="primary" showFirstButton showLastButton/>
       </div>
       :
       <div style={{display:"flex", justifyContent:"center"}}>
-      <Pagination count={Math.round(totalPages/pageLimit)} page={page} onChange={(event,val)=>
+      <Pagination count={Math.ceil(totalPages/pageLimit)} page={page} onChange={(event,val)=>
       setPage(val)} color="primary" showFirstButton showLastButton/>
       </div>
       }
