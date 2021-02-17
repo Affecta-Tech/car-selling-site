@@ -78,7 +78,7 @@ import React, {
     }
     return (
         <div>
-            <AdminNavBar value={1}/>
+            <AdminNavBar value={2}/>
             
             <form
             onSubmit={submitNewCar}
@@ -129,7 +129,10 @@ import React, {
                 carID === ""?
                 <div></div>
                 :
-                <DragDrop id={carID} />
+                <div style={{marginLeft:"180px"}}>
+                    <DragDrop id={carID} />
+                </div>
+                
             }
         </div>
     );

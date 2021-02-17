@@ -90,7 +90,7 @@ var submiter = (username,pw) => {
 
   return (
     <div>
-      <NavBar value={1}/>
+      <NavBar value={4}/>
     <Container component="main" maxWidth="xs">
       
       <CssBaseline />

@@ -242,7 +242,7 @@ let Landing = () => {
       fuelType
       vin */}
       {
-      resultMessage === undefined?
+      resultMessage === undefined || listing === undefined?
       <div>
          <br></br>
          <br></br>
@@ -259,17 +259,25 @@ let Landing = () => {
             {cars.map((item,index) => (
             <Grid item key={index} xs={12} sm={6} md={4}>
                <Card className={classes.card}>
-                  <CardMedia
+                  {
+                     item.imgs.length === 0?
+                     <CardMedia
+                     className={classes.cardMedia}
+                     image="https://vectorified.com/images/no-image-icon-17.PNG"
+                     title="No Images"
+                     />
+                     :
+                     <CardMedia
                      className={classes.cardMedia}
                      image={item.imgs[0]}
                      title="Image title"
                      />
+                     }
+
+
                   <CardContent className={classes.cardContent}>
                      <Typography gutterBottom variant="h5" component="h2">
                         {item.year} {item.make} {item.model}
-                     </Typography>
-                     <Typography>
-                        {item.sold === false?"Available":"Sold"}
                      </Typography>
                      <Typography>
                         Color: {item.color}
@@ -280,14 +288,14 @@ let Landing = () => {
                      <Typography>
                         drivetrain: {item.drivetrain}
                      </Typography>
-                     <Typography>
+                     {/* <Typography>
                         Features: {item.features.map((feature,featureIndex) => 
                         <span key={featureIndex}>
-                        {/* We need a break tag until we add the css to create line breaks */}
                         <br></br>
                         --{feature}
-                        </span>)}
-                     </Typography>
+                        </span>)
+                        }
+                     </Typography> */}
                      <Typography>
                         city mpg: {item.mpg.city}
                      </Typography>
@@ -297,7 +305,7 @@ let Landing = () => {
                      <Typography>
                         price: {item.price.$numberDecimal}
                      </Typography>
-                     <Typography>
+                     {/* <Typography>
                         transmission: {item.transmission}
                      </Typography>
                      <Typography>
@@ -305,6 +313,9 @@ let Landing = () => {
                      </Typography>
                      <Typography>
                         engine: {item.engine}
+                     </Typography> */}
+                     <Typography>
+                        {item.sold === false?"Available":"Sold"}
                      </Typography>
                   </CardContent>
                   <CardActions>
@@ -336,7 +347,9 @@ let Landing = () => {
                            </Toolbar>
                         </AppBar>
                         <Card className={classes.card} style={{display:"block",overflow:'auto'}}>
-                           <img style={{marginTop:"63px",width:"100%",height:"auto"}} src={listing.imgs[carImageNum-1]} ></img>
+                           <div style={{margin:"63px auto",display:"flex",maxWidth:"75%",height:"auto",justifyContent:"center"}}>
+                           <img style={{marginTop:"63px",width:"100%",height:"auto",boxShadow: "0 4px 8px 0 rgb(0 0 0 / 10%), 0 4px 8px 0 rgb(0 0 0 / 10%)"}} src={listing.imgs[carImageNum-1]} ></img>
+                           </div>
                               <div style={{display:"flex", justifyContent:"center"}}>
                               <Pagination count={listing.imgs.length} page={carImageNum} onChange={(event,val)=>
                               {setCarImageNum(val)}

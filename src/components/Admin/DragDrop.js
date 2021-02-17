@@ -29,6 +29,7 @@ const DropArea = (props,id) => {
     }
   }
   const renderImageInfo = () => {
+    
     if (imageTask === ''){
       return ""
     }
@@ -36,7 +37,6 @@ const DropArea = (props,id) => {
     return(
       <div>
         <p>Name: {imageName}</p>
-        <p>Task ID: {imageTask}</p>
         <p>{imageDone}</p>
       </div>
     )
@@ -83,6 +83,7 @@ const DropArea = (props,id) => {
               await sleep(2000)
               setImageUpload('')
               setImageDone('Upload Complete')
+              props.sendData("upload complete")
               return response
             }
             return fetchData()

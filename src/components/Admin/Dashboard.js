@@ -278,7 +278,7 @@ var heatMapOptions = {
 };
   return (
 <div>
-   <AdminNavBar value={2}/>
+   <AdminNavBar value={3}/>
    
    <div style={{display:"flex",marginLeft: "180px",
     flexDirection: "row",
