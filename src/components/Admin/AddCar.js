@@ -40,6 +40,7 @@ import React, {
 )
         }
     }
+    
     var submiter = (submission) => {
 
             console.log(submission)
@@ -75,6 +76,9 @@ import React, {
               }
               return fetchData()
         
+    }
+    var uploadComplete = (val) => {
+        console.log(val)
     }
     return (
         <div>
@@ -130,7 +134,7 @@ import React, {
                 <div></div>
                 :
                 <div style={{marginLeft:"180px"}}>
-                    <DragDrop id={carID} />
+                    <DragDrop id={carID} sendData={uploadComplete}/>
                 </div>
                 
             }
