@@ -78,8 +78,9 @@ let AdminNavBar = (props) => {
         <Tab value={0} label='Home'  to='/' component={Link} /> 
         <Tab value={1} label='Inventory'  to='/admin-inventory' component={Link} /> 
         <Tab value={2} label='Add Car'  to='/admin-add' component={Link} /> 
-        <Tab value={3} label='Analytics'  to='/admin-dash' component={Link} /> 
-        <Tab value={4} label='Log Out'  to='/admin-portal' component={Link} /> 
+        <Tab value={3} label='Orders'  to='/admin-orders' component={Link} /> 
+        <Tab value={4} label='Analytics'  to='/admin-dash' component={Link} /> 
+        <Tab value={5} label='Log Out'  to='/admin-portal' component={Link} /> 
         </Tabs>
       </AppBar>
   );

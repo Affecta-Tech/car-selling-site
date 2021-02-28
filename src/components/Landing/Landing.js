@@ -242,7 +242,7 @@ let Landing = () => {
       fuelType
       vin */}
       {
-      resultMessage === undefined || listing === undefined?
+      resultMessage === undefined?
       <div>
          <br></br>
          <br></br>

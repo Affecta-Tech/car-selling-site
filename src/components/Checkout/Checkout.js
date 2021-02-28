@@ -84,6 +84,7 @@ function Checkout() {
   let carID = window.location.search.split("id=")[1]
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [resultMessage, setResultsMessage] = React.useState(<p></p>);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -92,7 +93,56 @@ function Checkout() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+  var placeOrder = (e) => {
+    e.preventDefault()
+    // setErrorMessage("")
+    // // console.log(e.target.email.value)
+    
+    // console.log()
+    // if (
+    //     isNaN(parseInt(e.target.year.value))===true || 
+    //     isNaN(parseInt(e.target.price.value))===true ||
+    //     isNaN(parseInt(e.target.mileage.value))===true ||
+    //     isNaN(parseInt(e.target.city.value))===true ||
+    //     isNaN(parseInt(e.target.highway.value))===true
+    //     ){
+    //      setErrorMessage(<p style={{color:"red"}}>Year, Price, Mileage, City MPG and Highway MPG must all be numbers</p>)
+    // } else{
+        submiter(e.target)
+        .then(
+            res=> {
+                res === 200?
+                //create function that takes in event values and creates mongo doc
+                setResultsMessage(<p style={{color:"green"}}>Car Added!</p>)
+                :
+                setResultsMessage(<p style={{color:"red"}}>{res.message}</p>)
+            }
+)
+    // }
+}
 
+var submiter = (submission) => {
+
+        console.log(submission)
+        const fetchData = async () => {
+            const result = await fetch(`http://localhost:8080/stripe/charge`, {
+              headers: {
+                Accept: 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+              "amount":999,
+              "currency":"usd"
+                }
+              ),
+              method: "POST", credentials: 'same-origin'
+            });
+            let response = await result.json();
+            return response
+          }
+          return fetchData()
+    
+}
   return (
     <React.Fragment>
     <NavBar value={3}></NavBar>
@@ -136,14 +186,26 @@ function Checkout() {
                       Back
                     </Button>
                   )}
+                  {
+                    activeStep === steps.length - 1?
+                    <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={placeOrder}
+                    className={classes.button}
+                  >
+                    Place Order
+                  </Button>
+                  :
                   <Button
                     variant="contained"
                     color="primary"
                     onClick={handleNext}
                     className={classes.button}
                   >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                  </Button>
+                    Next
+                  </Button>}
+                  {resultMessage  }
                 </div>
               </React.Fragment>
             )}

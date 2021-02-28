@@ -7,6 +7,7 @@ import Dashboard from "./components/Admin/Dashboard.js"
 import AddCar from "./components/Admin/AddCar"
 import Inventory from "./components/Admin/Inventory"
 import SpecificCar from "./components/Admin/SpecificCar"
+import Orders from "./components/Admin/Orders"
 import { Route, Switch } from 'react-router-dom';
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/admin-add" component={AddCar} exact />
         <Route path="/admin-inventory" component={Inventory} exact />
         <Route path="/admin-specific-car" component={SpecificCar} exact />
+        <Route path="/admin-orders" component={Orders} exact />
     </Switch>
   </main>
   );
