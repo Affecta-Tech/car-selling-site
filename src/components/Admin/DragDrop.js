@@ -73,7 +73,7 @@ const DropArea = (props,id) => {
         console.log("PROPS ",props.id)
          const uploadFile = (formData)  => {
             const fetchData = async () => {
-              const result = await fetch(`http://localhost:8080/cars/upload_photo?id=${props.id}&name=${e.dataTransfer.files[i].name}`, {
+              const result = await fetch(`http://localhost:8080/admin/upload_photo?id=${props.id}&name=${e.dataTransfer.files[i].name}`, {
                 headers: {
                   Accept: 'application/json'
                 },body: formData, method: "POST", credentials: 'same-origin'

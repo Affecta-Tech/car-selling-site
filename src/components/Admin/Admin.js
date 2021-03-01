@@ -73,7 +73,7 @@ var SubmitLogin = (e) => {
 }
 var submiter = (username,pw) => {
   const fetchData = async () => {
-    const result = await fetch(`http://localhost:8080/cars/admin`, {
+    const result = await fetch(`http://localhost:8080/admin/admin`, {
       headers: {
         Accept: 'application/json, text/plain, */*',
         'Content-Type': 'application/json'

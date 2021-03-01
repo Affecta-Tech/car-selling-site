@@ -239,7 +239,7 @@ import React, {
                 description = car.description
             }
             const fetchData = async () => {
-                const result = await fetch(`http://localhost:8080/cars/update/${car._id}`, {
+                const result = await fetch(`http://localhost:8080/admin/update/${car._id}`, {
                   headers: {
                     Accept: 'application/json, text/plain, */*',
                     'Content-Type': 'application/json'

@@ -15,6 +15,10 @@ import PaymentForm from './PaymentForm';
 import Review from './Review';
 import NavBar from '../NavBar/NavBar.js'
 import queryString from 'query-string';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import './styles.css';
+import { useHistory } from "react-router-dom";
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -34,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
   layout: {
     width: 'auto',
+    zIndex: 1,
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
@@ -65,27 +70,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ['Confirm Car', 'Payment details', 'Reciept'];
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <AddressForm />;
-    case 1:
-      return <PaymentForm />;
-    case 2:
-      return <Review />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
+
 
 function Checkout() {
   let carID = window.location.search.split("id=")[1]
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [loader, setLoader] = React.useState(0);
   const [resultMessage, setResultsMessage] = React.useState(<p></p>);
-
+  const history = useHistory();
+  function getStepContent(step) {
+    switch (step) {
+      case 0:
+        return <AddressForm id={carID}/>;
+      case 1:
+        return <PaymentForm />;
+      case 2:
+        return <Review />;
+      default:
+        throw new Error('Unknown step');
+    }
+  }
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
@@ -95,6 +102,7 @@ function Checkout() {
   };
   var placeOrder = (e) => {
     e.preventDefault()
+    setLoader(1)
     // setErrorMessage("")
     // // console.log(e.target.email.value)
     
@@ -111,11 +119,10 @@ function Checkout() {
         submiter(e.target)
         .then(
             res=> {
-                res === 200?
                 //create function that takes in event values and creates mongo doc
-                setResultsMessage(<p style={{color:"green"}}>Car Added!</p>)
-                :
-                setResultsMessage(<p style={{color:"red"}}>{res.message}</p>)
+                setResultsMessage(res === 200?<p style={{color:"green"}}>Order Placed!</p>:<p style={{color:"red"}}>{res.message}</p>)
+                setActiveStep(res === 200?activeStep + 1:activeStep)
+                setLoader(0)
             }
 )
     // }
@@ -132,7 +139,24 @@ var submiter = (submission) => {
               },
               body: JSON.stringify({
               "amount":999,
-              "currency":"usd"
+              "currency":"usd",
+              "vin":"awbefuoawb3224",
+              "id": "tok_visa",
+              "receipt_email": "email",
+              "shipping": "shipping_info",
+              "billing_details": {
+                "address": {
+                  "city": "dank city",
+                  "country": "country",
+                  "line1": "line1",
+                  "line2": "line2",
+                  "postal_code": "postal_code",
+                  "state": "state"
+                },
+                "email": "email yup",
+                "name": "Jimy john",
+                "phone": "phone"
+              },
                 }
               ),
               method: "POST", credentials: 'same-origin'
@@ -146,14 +170,14 @@ var submiter = (submission) => {
   return (
     <React.Fragment>
     <NavBar value={3}></NavBar>
-      <CssBaseline />
+      {/* <CssBaseline />
       <AppBar position="absolute" color="default" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>
             Car ID: {carID}
           </Typography>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <main className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
@@ -179,39 +203,81 @@ var submiter = (submission) => {
               </React.Fragment>
             ) : (
               <React.Fragment>
+
                 {getStepContent(activeStep)}
                 <div className={classes.buttons}>
-                  {activeStep !== 0 && (
+                  {/* {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>
                       Back
                     </Button>
-                  )}
+                  )} */}
                   {
-                    activeStep === steps.length - 1?
+                    activeStep === 0?
                     <Button
                     variant="contained"
                     color="primary"
-                    onClick={placeOrder}
+                    onClick={handleNext}
                     className={classes.button}
                   >
-                    Place Order
+                    Confirm Car
                   </Button>
                   :
+                  activeStep === 1?
+                  <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={placeOrder}
+                  className={classes.button}
+                >
+                  Place Order
+                </Button>
+                :
+                activeStep === 2?
+                <div>
+                <Button
+                variant="contained"
+                color="primary"
+                onClick={() => history.push("/")}
+                className={classes.button}
+              >
+                Home
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => window.print()}
+                className={classes.button}
+              >
+                Print Page
+              </Button>
+                </div>
+
+              :
                   <Button
                     variant="contained"
                     color="primary"
                     onClick={handleNext}
                     className={classes.button}
                   >
-                    Next
+                    Confirm
                   </Button>}
-                  {resultMessage  }
+                  
+                  {resultMessage}
                 </div>
               </React.Fragment>
             )}
           </React.Fragment>
         </Paper>
         <Copyright />
+        {loader === 0?
+        <div></div>
+        :
+        <div className="loader-container">
+          <div className="loader">
+            <CircularProgress />
+          </div>
+        </div>
+        }
       </main>
     </React.Fragment>
   );

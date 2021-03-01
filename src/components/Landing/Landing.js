@@ -24,7 +24,18 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
+import './styles.css';
+import StarIcon from '@material-ui/icons/StarBorder';
+import CheckIcon from '@material-ui/icons/CheckCircleOutline';
+import LocalGasStationIcon from '@material-ui/icons/LocalGasStation';
+import OpacityIcon from '@material-ui/icons/Opacity';
+import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import CommuteIcon from '@material-ui/icons/Commute';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import { blue, green, lightGreen, orange, purple, red, yellow } from '@material-ui/core/colors';
+import DriveEtaIcon from '@material-ui/icons/DriveEta';
+import InvertColorsIcon from '@material-ui/icons/InvertColors';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -44,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
   card: {
       height: '100%',
       display: 'flex',
+      justifyContent:"center",
       flexDirection: 'column',
   },
   cardMedia: {
@@ -51,6 +63,10 @@ const useStyles = makeStyles((theme) => ({
   },
   cardContent: {
       flexGrow: 1,
+      display: 'flex',
+      justifyContent:"center",
+      flexDirection: 'column',
+      alignItems:"center"
   },
   footer: {
       backgroundColor: theme.palette.background.paper,
@@ -258,7 +274,7 @@ let Landing = () => {
          <Grid container spacing={4}>
             {cars.map((item,index) => (
             <Grid item key={index} xs={12} sm={6} md={4}>
-               <Card className={classes.card}>
+               <Card className="card">
                   {
                      item.imgs.length === 0?
                      <CardMedia
@@ -271,15 +287,19 @@ let Landing = () => {
                      className={classes.cardMedia}
                      image={item.imgs[0]}
                      title="Image title"
+                     onClick={() => {setOpen(true); setListing(item)}}
                      />
                      }
 
 
-                  <CardContent className={classes.cardContent}>
+                  <CardContent className={classes.cardContent}
+                  style={{}}
+                  onClick={() => {setOpen(true); setListing(item)}}
+                  >
                      <Typography gutterBottom variant="h5" component="h2">
                         {item.year} {item.make} {item.model}
                      </Typography>
-                     <Typography>
+                     {/* <Typography>
                         Color: {item.color}
                      </Typography>
                      <Typography>
@@ -287,7 +307,7 @@ let Landing = () => {
                      </Typography>
                      <Typography>
                         drivetrain: {item.drivetrain}
-                     </Typography>
+                     </Typography> */}
                      {/* <Typography>
                         Features: {item.features.map((feature,featureIndex) => 
                         <span key={featureIndex}>
@@ -296,14 +316,14 @@ let Landing = () => {
                         </span>)
                         }
                      </Typography> */}
-                     <Typography>
+                     {/* <Typography>
                         city mpg: {item.mpg.city}
                      </Typography>
                      <Typography>
                         highway mpg: {item.mpg.highway}
-                     </Typography>
+                     </Typography> */}
                      <Typography>
-                        price: {item.price.$numberDecimal}
+                        ${item.price.$numberDecimal}
                      </Typography>
                      {/* <Typography>
                         transmission: {item.transmission}
@@ -314,14 +334,14 @@ let Landing = () => {
                      <Typography>
                         engine: {item.engine}
                      </Typography> */}
-                     <Typography>
+                     {/* <Typography>
                         {item.sold === false?"Available":"Sold"}
-                     </Typography>
+                     </Typography> */}
                   </CardContent>
                   <CardActions>
-                     <Button variant="outlined" color="primary" onClick={() =>{setOpen(true); setListing(item)}}>
+                     {/* <Button variant="outlined" color="primary" onClick={() =>{setOpen(true); setListing(item)}}>
                      View
-                     </Button>
+                     </Button> */}
                      {                       
                      listing === "" || listing=== undefined?
                      <div></div>
@@ -333,20 +353,16 @@ let Landing = () => {
                                  {setOpen(false);setCarImageNum(1)}} aria-label="close">
                                  <CloseIcon />
                               </IconButton>
-                              <Typography variant="h6" className={classes.title}>
-                                 {listing._id}
+                              <Typography gutterBottom variant="h5" component="h2">
+                                {listing.year} {listing.make} {listing.model}
                               </Typography>
-                              <Link autoFocus color="" onClick={() =>
-                              {setOpen(false);setCarImageNum(1)}} to={{
-                              pathname: '/checkout',
-                              search: `?id=${listing._id}`,}}>
-                              <Button>                                                                           
-                              Buy
-                              </Button>
-                              </Link>
+
                            </Toolbar>
+                           
                         </AppBar>
+                        
                         <Card className={classes.card} style={{display:"block",overflow:'auto'}}>
+                           
                            <div style={{margin:"63px auto",display:"flex",maxWidth:"75%",height:"auto",justifyContent:"center"}}>
                            <img style={{marginTop:"63px",width:"100%",height:"auto",boxShadow: "0 4px 8px 0 rgb(0 0 0 / 10%), 0 4px 8px 0 rgb(0 0 0 / 10%)"}} src={listing.imgs[carImageNum-1]} ></img>
                            </div>
@@ -355,48 +371,119 @@ let Landing = () => {
                               {setCarImageNum(val)}
                               } color="primary" showFirstButton showLastButton/>
                               </div>
-                           <CardContent className={classes.cardContent}>
-                              <Typography gutterBottom variant="h5" component="h2">
-                                 {listing.year} {listing.make} {listing.model}
+                           <CardContent className="card-container">
+                           <Link 
+                           className="buyBtn"
+                           autoFocus 
+                           onClick={() =>
+                              {setOpen(false);setCarImageNum(1)}} to={{
+                              pathname: '/checkout',
+                              search: `?id=${listing._id}`,}}
+                              >
+                              <Button style={{color:"white"}}>                                                                           
+                              Buy
+                              </Button>
+                              </Link>
+                           <div className="info-container">
+                              {listing.sold === false?
+                              <div className="infoBox">
+                              <CheckIcon style={{ fontSize: 32, color:lightGreen[600] }}/>
+                              <Typography variant="h4" component="h2">Available</Typography>
+                              </div>
+                              :
+                              <div>Sold</div>}
+
+
+                              <div className="infoBox">
+                              <Typography variant="h5" component="h2">
+                                 Color
+                              </Typography>  
+                              <Typography variant="h3" component="h2">
+                              <OpacityIcon  style={{ fontSize: 32}}/> {listing.color}
                               </Typography>
-                              <Typography>
-                                 {listing.sold === false?"Available":"Sold"}
+                              </div>
+
+                              <div className="infoBox">
+                              <Typography variant="h5" component="h2">
+                              drivetrain
                               </Typography>
-                              <Typography>
-                                 Color: {listing.color}
+                              <Typography variant="h3" component="h2">
+                              <DriveEtaIcon style={{ fontSize: 32, color:blue[600] }}/> {listing.drivetrain}
                               </Typography>
-                              <Typography>
-                                 description: {listing.description}          
+                              </div>
+
+                              <div className="infoBox"> 
+                              <Typography variant="h5" component="h2">
+                                 City 
+                              </Typography> 
+                              <Typography variant="h3" component="h2">
+                              <LocalGasStationIcon style={{ fontSize: 32, color:purple[500] }}/> {listing.mpg.city}
                               </Typography>
-                              <Typography>
-                                 drivetrain: {listing.drivetrain}
+                              </div>
+                              <div className="infoBox">
+                              <Typography variant="h5" component="h2">
+                              Highway    
+                              </Typography>   
+                              <Typography variant="h3" component="h2">
+                              <LocalGasStationIcon style={{ fontSize: 32, color:red[500] }}/>   {listing.mpg.highway}
                               </Typography>
-                              <Typography>
-                                 Features: {listing.features.map((feature,featureIndex) => 
+                              </div>
+                              <div className="infoBox"> 
+                              
+                              <Typography variant="h3" component="h2">
+                                <MonetizationOnIcon style={{ fontSize: 32, color:lightGreen[600] }}/> {listing.price.$numberDecimal}
+                              </Typography>
+                              </div>
+                              <div className="infoBox"> 
+                              <Typography variant="h5" component="h2">
+                                 Transmission
+                              </Typography>
+                              <Typography variant="h3" component="h2">
+                              <DriveEtaIcon style={{ fontSize: 32, color:orange[600] }}/> {listing.transmission}
+                              </Typography>
+                              </div>
+                              <div className="infoBox">
+                              <Typography variant="h5" component="h2">
+                              Fuel Type
+                              </Typography>
+                              <Typography variant="h3" component="h2">
+                              <InvertColorsIcon style={{ fontSize: 32, color:blue[600] }}/> {listing.fuelType}
+                              </Typography>
+                              </div>
+                              <div className="infoBox">
+                              <Typography variant="h5" component="h2">
+                                 Engine
+                              </Typography>
+                              <Typography variant="h3" component="h2">
+                              <DriveEtaIcon style={{ fontSize: 32, color:purple[600] }}/> {listing.engine}
+                              </Typography>
+                              </div>
+
+                              </div>
+                              <div className="info-container-bottom">
+                              <div className="infoBoxFeat"> 
+                              <Typography variant="h3" component="h2">
+                              <StarIcon  style={{ fontSize: 32, color:yellow[600]}}/>Features
+                              </Typography>
+                              <Typography variant="h5" component="h2">
+                                 {listing.features.map((feature,featureIndex) => 
                                  <span key={featureIndex}>
                                  {/* We need a break tag until we add the css to create line breaks */}
                                  <br></br>
-                                 --{feature}
+                                 &#9679; {feature}
                                  </span>)}
                               </Typography>
+                              </div>
+                              <br></br>
+                              <div className="infoBoxDesc">
+                              <Typography variant="h3" component="h2">
+                                 <InfoOutlinedIcon style={{ fontSize: 32, color:blue[600]}}/> Description       
+                              </Typography>               
                               <Typography>
-                                 city mpg: {listing.mpg.city}
+                                 {listing.description}          
                               </Typography>
-                              <Typography>
-                                 highway mpg: {listing.mpg.highway}
-                              </Typography>
-                              <Typography>
-                                 price: {listing.price.$numberDecimal}
-                              </Typography>
-                              <Typography>
-                                 transmission: {listing.transmission}
-                              </Typography>
-                              <Typography>
-                                 fuelType: {listing.fuelType}
-                              </Typography>
-                              <Typography>
-                                 engine: {listing.engine}
-                              </Typography>
+                              </div>
+                              </div>
                            </CardContent>
                         </Card>
                      </Dialog>

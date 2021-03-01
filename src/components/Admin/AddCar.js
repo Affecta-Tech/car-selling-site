@@ -45,7 +45,7 @@ import React, {
 
             console.log(submission)
             const fetchData = async () => {
-                const result = await fetch(`http://localhost:8080/cars/add-car`, {
+                const result = await fetch(`http://localhost:8080/admin/add-car`, {
                   headers: {
                     Accept: 'application/json, text/plain, */*',
                     'Content-Type': 'application/json'
