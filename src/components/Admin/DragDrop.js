@@ -41,15 +41,34 @@ const DropArea = (props,id) => {
       </div>
     )
   }
+  const sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+  }
+  const uploadFile = (formData,i,e)  => {
+    const fetchData = async () => {
+      const result = await fetch(`http://localhost:8080/admin/upload_photo?id=${props.id}&name=${e.dataTransfer.files[i].name}`, {
+        headers: {
+          Accept: 'application/json'
+        },body: formData, method: "POST", credentials: 'same-origin'
+      });
+      let response = await result.json();
+      setImageTask(response)
+      await sleep(2000)
+      setImageUpload('')
+      setImageDone('Upload Complete')
+      props.sendData("upload complete")
+      return response
+    }
+    return fetchData()
+  }
+
   const onDrop = e => {
     e.preventDefault();
     setImageName('')
     setImageTask('')
     setImageUpload('loading')
     let i
-    const sleep = (milliseconds) => {
-      return new Promise(resolve => setTimeout(resolve, milliseconds))
-    }
+
     sleep(500).then(() => {
       console.log("waiting"); 
       
@@ -71,26 +90,10 @@ const DropArea = (props,id) => {
       setImageName((e.dataTransfer.files[i].name)); 
         console.log(id)
         console.log("PROPS ",props.id)
-         const uploadFile = (formData)  => {
-            const fetchData = async () => {
-              const result = await fetch(`http://localhost:8080/admin/upload_photo?id=${props.id}&name=${e.dataTransfer.files[i].name}`, {
-                headers: {
-                  Accept: 'application/json'
-                },body: formData, method: "POST", credentials: 'same-origin'
-              });
-              let response = await result.json();
-              setImageTask(response)
-              await sleep(2000)
-              setImageUpload('')
-              setImageDone('Upload Complete')
-              props.sendData("upload complete")
-              return response
-            }
-            return fetchData()
-          }
+
           // hard coding dataset_id for now until I get formData to work
           
-          uploadFile(formData)
+          uploadFile(formData,i,e)
           
       } else {
         return "Choose a dataset"

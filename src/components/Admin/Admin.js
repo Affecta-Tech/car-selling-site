@@ -13,10 +13,6 @@ import NavBar from '../NavBar/NavBar.js'
 import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 
-
-
-
-
 function Admin() {
   const useStyles = makeStyles((theme) => ({
     paper: {
@@ -39,7 +35,6 @@ function Admin() {
   }));
   const classes = useStyles();
   const [errorMessage, setErrorMessage] = useState("")
-  const [carYear, setCarYear] = useState("")
     const history = useHistory();
 function Copyright() {
   return (
@@ -55,7 +50,7 @@ var SubmitLogin = (e) => {
   setErrorMessage("")
   console.log(e.target.email.value)
   console.log(e.target.password.value)
-  submiter(e.target.email.value, e.target.password.value).then(res=>res.message=="Success"?history.push("/admin-dash"):setErrorMessage("Login Failed"))
+  submiter(e.target.email.value, e.target.password.value).then(res=>res.message==="Success"?history.push("/admin-orders"):setErrorMessage("Login Failed"))
   
 
 //   fetch(`http://localhost:8080/cars/admin`, {

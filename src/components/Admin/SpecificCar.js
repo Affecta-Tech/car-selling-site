@@ -3,15 +3,10 @@ import React, {
     useState
   } from 'react';
   import Button from '@material-ui/core/Button';
-  import Card from '@material-ui/core/Card';
-  import CardActions from '@material-ui/core/CardActions';
-  import CardContent from '@material-ui/core/CardContent';
-  import Grid from '@material-ui/core/Grid';
   import Typography from '@material-ui/core/Typography';
   import { makeStyles } from '@material-ui/core/styles';
   import Container from '@material-ui/core/Container';
   import AdminNavBar from './AdminNavBar'
-  import Slide from '@material-ui/core/Slide';
   import DragDrop from "./DragDrop"
   import TextField from '@material-ui/core/TextField';
   import { useHistory } from "react-router-dom";
@@ -48,17 +43,7 @@ import React, {
         padding: theme.spacing(6),
     },
   }));
-  
-  
-  const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction = "up"
-    ref = {
-        ref
-    } {
-        ...props
-    }
-    />;
-  });
+
   
   let Inventory = () => {
     let carID = window.location.search.split("id=")[1]
@@ -251,7 +236,6 @@ import React, {
                   "color":color,
                   "year":year,
                   "price":price,
-                  "model":model,
                   "mileage":mileage,
                   "drivetrain":drivetrain,
                   "transmission":transmission,
@@ -275,7 +259,7 @@ import React, {
     }
     useEffect(() => {
       getCars()
-    }, [deleteError, uploadError]);
+    }, [deleteError, uploadError]);// eslint-disable-line react-hooks/exhaustive-deps
   
     return (
   <React.Fragment>
@@ -294,7 +278,7 @@ import React, {
            <br></br>
         </div>
         :
-        <Container className={classes.cardGrid} maxWidth="md" style={{marginLeft:"180px"}}>
+        <Container className={classes.cardGrid} maxWidth="md" style={{marginLeft:"25px"}}>
             <h1>{car._id}</h1>
             <Button 
                 variant="contained"

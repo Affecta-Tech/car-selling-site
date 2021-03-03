@@ -1,10 +1,5 @@
 import React from 'react';
-
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 
 function AddressForm(props) {
   const [car, setCar] = React.useState()
@@ -24,7 +19,7 @@ function AddressForm(props) {
 }
 React.useEffect(() => {
   getCars()
-}, []);
+}, []);// eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <React.Fragment>
@@ -37,7 +32,7 @@ React.useEffect(() => {
         <Typography variant="h5" align="center" color="textSecondary" paragraph>
           ${car.price.$numberDecimal}
         </Typography>
-        <img style={{width:"100%", height:"auto"}} src={car.imgs[0]}></img>
+        <img alt={car.year+" "+car.make+" "+car.model} style={{width:"100%", height:"auto"}} src={car.imgs[0]}></img>
       </div>
       
       :

@@ -29,11 +29,9 @@ import StarIcon from '@material-ui/icons/StarBorder';
 import CheckIcon from '@material-ui/icons/CheckCircleOutline';
 import LocalGasStationIcon from '@material-ui/icons/LocalGasStation';
 import OpacityIcon from '@material-ui/icons/Opacity';
-import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import CommuteIcon from '@material-ui/icons/Commute';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import { blue, green, lightGreen, orange, purple, red, yellow } from '@material-ui/core/colors';
+import { blue, lightGreen, orange, purple, red, yellow } from '@material-ui/core/colors';
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
 
@@ -97,27 +95,12 @@ let Landing = () => {
   const [carColor, setCarColor] = useState("")
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = (item) => {
-   setCarImageNum(1)
-   setOpen(true)
-  };
-  var createListing = (item) => {
 
-  }
   const handleClose = () => {
       setCarImageNum(1)
       setOpen(false);
   };
-  var pics = [
-   {
-       name: "Random Name #1",
-       description: "Probably the most random thing you have ever seen!"
-   },
-   {
-       name: "Random Name #2",
-       description: "Hello World!"
-   }
-]
+
   var getCars = () => {
       fetch(`http://localhost:8080/cars/?page=${page}&limit=${pageLimit}&color=${carColor}&year=${carYear}`, {
               method: 'get',
@@ -152,7 +135,7 @@ let Landing = () => {
 
   useEffect(() => {
     getCars()
-  }, [page, pageLimit, carColor, carYear]);
+  }, [page, pageLimit, carColor, carYear]);// eslint-disable-line react-hooks/exhaustive-deps
 
   return (
 <React.Fragment>
@@ -364,7 +347,7 @@ let Landing = () => {
                         <Card className={classes.card} style={{display:"block",overflow:'auto'}}>
                            
                            <div style={{margin:"63px auto",display:"flex",maxWidth:"75%",height:"auto",justifyContent:"center"}}>
-                           <img style={{marginTop:"63px",width:"100%",height:"auto",boxShadow: "0 4px 8px 0 rgb(0 0 0 / 10%), 0 4px 8px 0 rgb(0 0 0 / 10%)"}} src={listing.imgs[carImageNum-1]} ></img>
+                           <img alt ="car" style={{marginTop:"63px",width:"100%",height:"auto",boxShadow: "0 4px 8px 0 rgb(0 0 0 / 10%), 0 4px 8px 0 rgb(0 0 0 / 10%)"}} src={listing.imgs[carImageNum-1]} ></img>
                            </div>
                               <div style={{display:"flex", justifyContent:"center"}}>
                               <Pagination count={listing.imgs.length} page={carImageNum} onChange={(event,val)=>
@@ -378,7 +361,7 @@ let Landing = () => {
                            onClick={() =>
                               {setOpen(false);setCarImageNum(1)}} to={{
                               pathname: '/checkout',
-                              search: `?id=${listing._id}`,}}
+                              search: `?id=${listing._id}&vin=${listing.vin}&price=${listing.price.$numberDecimal}`,}}
                               >
                               <Button style={{color:"white"}}>                                                                           
                               Buy
@@ -499,7 +482,7 @@ let Landing = () => {
       totalPages === 1?
       <div style={{display:"flex", justifyContent:"center"}}>
       <Pagination count={1} page={page} onChange={(event,val)=>
-      setPage(val)} co  lor="primary" showFirstButton showLastButton/>
+      setPage(val)} color="primary" showFirstButton showLastButton/>
       </div>
       :
       <div style={{display:"flex", justifyContent:"center"}}>

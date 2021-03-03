@@ -1,88 +1,50 @@
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar'
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Fade from '@material-ui/core/Fade';
 import { Link } from 'react-router-dom';
-import Avatar from '@material-ui/core/Avatar';
-import LockOutlinedIcon from '@material-ui/icons/PersonSharp';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import IconButton from '@material-ui/core/IconButton';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {/* {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'} */}
-    </Typography>
-  );
-}
-
-const useStyles = makeStyles((theme) => ({
-  icon: {
-    marginRight: theme.spacing(2),
-  },
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
-  },
-  heroButtons: {
-    marginTop: theme.spacing(4),
-  },
-  cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
-  },
-  card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  cardMedia: {
-    paddingTop: '56.25%', // 16:9
-  },
-  cardContent: {
-    flexGrow: 1,
-  },
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6),
-  },
-}));
 
 let AdminNavBar = (props) => {
-  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
-      <AppBar position=""         
-      style={{
-        width:"162px",
-        height:"100vh",
-        position:"fixed"
-        }}>
-        <Tabs orientation="vertical" value={props.value}>
-          <div style={{        
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            margin: "auto",
-            height: "100px",
-            width: "100%"
-            }}>
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-          </div>
-        <Tab value={0} label='Home'  to='/' component={Link} /> 
-        <Tab value={1} label='Inventory'  to='/admin-inventory' component={Link} /> 
-        <Tab value={2} label='Add Car'  to='/admin-add' component={Link} /> 
-        <Tab value={3} label='Orders'  to='/admin-orders' component={Link} /> 
-        <Tab value={4} label='Analytics'  to='/admin-dash' component={Link} /> 
-        <Tab value={5} label='Log Out'  to='/admin-portal' component={Link} /> 
-        </Tabs>
-      </AppBar>
+    <div>
+      <IconButton
+      aria-label="more"
+      aria-controls="long-menu"
+      aria-haspopup="true"
+      onClick={handleClick}
+      >
+      <MoreVertIcon />
+      </IconButton>
+      <Menu
+      id="fade-menu"
+      anchorEl={anchorEl}
+      keepMounted
+      open={open}
+      onClose={handleClose}
+      TransitionComponent={Fade}
+      >
+      <MenuItem component={Link} to='/'>Home</MenuItem>
+      <MenuItem component={Link} to="/admin-inventory">Inventory</MenuItem>
+      <MenuItem component={Link} to="/admin-add">Add Car</MenuItem>
+      <MenuItem component={Link} to="/admin-orders">Orders</MenuItem>
+      {/* <MenuItem component={Link} to="/admin-dash">Analytics</MenuItem> */}
+      <MenuItem component={Link} to="/admin-portal">Log Out</MenuItem>
+      </Menu>
+    </div>
+
   );
 }
 export default AdminNavBar;

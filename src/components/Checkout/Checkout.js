@@ -1,8 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -14,8 +11,7 @@ import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
 import NavBar from '../NavBar/NavBar.js'
-import queryString from 'query-string';
-import CircularProgress from '@material-ui/core/CircularProgress';
+
 import './styles.css';
 import { useHistory } from "react-router-dom";
 
@@ -75,18 +71,20 @@ const steps = ['Confirm Car', 'Payment details', 'Reciept'];
 
 
 function Checkout() {
-  let carID = window.location.search.split("id=")[1]
+  console.log(window.location.search)
+  let carID = window.location.search.split("?id=")[1].split("&vin=")[0]
+  let carVin = window.location.search.split("&vin=")[1].split("&price=")[0]
+  let carPrice = window.location.search.split("&price=")[1]
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
-  const [loader, setLoader] = React.useState(0);
-  const [resultMessage, setResultsMessage] = React.useState(<p></p>);
+
   const history = useHistory();
   function getStepContent(step) {
     switch (step) {
       case 0:
         return <AddressForm id={carID}/>;
       case 1:
-        return <PaymentForm />;
+        return <PaymentForm vin={carVin} price={carPrice}/>;
       case 2:
         return <Review />;
       default:
@@ -97,76 +95,6 @@ function Checkout() {
     setActiveStep(activeStep + 1);
   };
 
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
-  };
-  var placeOrder = (e) => {
-    e.preventDefault()
-    setLoader(1)
-    // setErrorMessage("")
-    // // console.log(e.target.email.value)
-    
-    // console.log()
-    // if (
-    //     isNaN(parseInt(e.target.year.value))===true || 
-    //     isNaN(parseInt(e.target.price.value))===true ||
-    //     isNaN(parseInt(e.target.mileage.value))===true ||
-    //     isNaN(parseInt(e.target.city.value))===true ||
-    //     isNaN(parseInt(e.target.highway.value))===true
-    //     ){
-    //      setErrorMessage(<p style={{color:"red"}}>Year, Price, Mileage, City MPG and Highway MPG must all be numbers</p>)
-    // } else{
-        submiter(e.target)
-        .then(
-            res=> {
-                //create function that takes in event values and creates mongo doc
-                setResultsMessage(res === 200?<p style={{color:"green"}}>Order Placed!</p>:<p style={{color:"red"}}>{res.message}</p>)
-                setActiveStep(res === 200?activeStep + 1:activeStep)
-                setLoader(0)
-            }
-)
-    // }
-}
-
-var submiter = (submission) => {
-
-        console.log(submission)
-        const fetchData = async () => {
-            const result = await fetch(`http://localhost:8080/stripe/charge`, {
-              headers: {
-                Accept: 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-              "amount":999,
-              "currency":"usd",
-              "vin":"awbefuoawb3224",
-              "id": "tok_visa",
-              "receipt_email": "email",
-              "shipping": "shipping_info",
-              "billing_details": {
-                "address": {
-                  "city": "dank city",
-                  "country": "country",
-                  "line1": "line1",
-                  "line2": "line2",
-                  "postal_code": "postal_code",
-                  "state": "state"
-                },
-                "email": "email yup",
-                "name": "Jimy john",
-                "phone": "phone"
-              },
-                }
-              ),
-              method: "POST", credentials: 'same-origin'
-            });
-            let response = await result.json();
-            return response
-          }
-          return fetchData()
-    
-}
   return (
     <React.Fragment>
     <NavBar value={3}></NavBar>
@@ -226,7 +154,6 @@ var submiter = (submission) => {
                   <Button
                   variant="contained"
                   color="primary"
-                  onClick={placeOrder}
                   className={classes.button}
                 >
                   Place Order
@@ -261,23 +188,13 @@ var submiter = (submission) => {
                   >
                     Confirm
                   </Button>}
-                  
-                  {resultMessage}
                 </div>
               </React.Fragment>
             )}
           </React.Fragment>
         </Paper>
         <Copyright />
-        {loader === 0?
-        <div></div>
-        :
-        <div className="loader-container">
-          <div className="loader">
-            <CircularProgress />
-          </div>
-        </div>
-        }
+
       </main>
     </React.Fragment>
   );

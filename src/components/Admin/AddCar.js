@@ -56,7 +56,6 @@ import React, {
                   "color":submission.color.value,
                   "year":submission.year.value,
                   "price":submission.price.value,
-                  "model":submission.model.value,
                   "mileage":submission.mileage.value,
                   "drivetrain":submission.drivetrain.value,
                   "transmission":submission.transmission.value,
@@ -86,7 +85,7 @@ import React, {
             
             <form
             onSubmit={submitNewCar}
-             style={{marginLeft:"180px",paddingTop:"25px",maxWidth:"300px",display:"flex",flexDirection:"column"}}>
+             style={{marginLeft:"25px",paddingTop:"25px",maxWidth:"300px",display:"flex",flexDirection:"column"}}>
                 
                 <TextField name="make" id="standard-basic" label="Make" />
                 <TextField name="model" id="standard-basic" label="Model" />
@@ -133,7 +132,7 @@ import React, {
                 carID === ""?
                 <div></div>
                 :
-                <div style={{marginLeft:"180px"}}>
+                <div style={{marginLeft:"25px"}}>
                     <DragDrop id={carID} sendData={uploadComplete}/>
                 </div>
                 
