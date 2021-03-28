@@ -41,7 +41,7 @@ let AdminNavBar = (props) => {
       <MenuItem component={Link} to="/admin-add">Add Car</MenuItem>
       <MenuItem component={Link} to="/admin-orders">Orders</MenuItem>
       {/* <MenuItem component={Link} to="/admin-dash">Analytics</MenuItem> */}
-      <MenuItem component={Link} to="/admin-portal">Log Out</MenuItem>
+      <MenuItem component={Link} to="/admin-portal" onClick={() => {localStorage.removeItem("tok")}}>Log Out</MenuItem>
       </Menu>
     </div>
 

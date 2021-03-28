@@ -24,6 +24,8 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import CancelIcon from '@material-ui/icons/Cancel';
 import Menu from '@material-ui/core/Menu';
 import Fade from '@material-ui/core/Fade';
+import { useHistory } from "react-router-dom";
+import { BASE_URL } from '../../api/token';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -61,6 +63,11 @@ const columns = [
 
 // 
 export default function Orders() {
+  const history = useHistory();
+  console.log(localStorage.getItem("tok"))
+  if (!localStorage.getItem("tok")){
+      history.push("/admin-portal")
+  }
   const [orders, setOrders] = useState([])
   const classes = useStyles();
   const [searchTerm, setSearchTerm] = useState("")
@@ -122,11 +129,12 @@ export default function Orders() {
   }
 
     var getOrders = () => {
-      fetch(`http://localhost:8080/admin/admin-orders?page=${page}&limit=${pageLimit}&_id=${databaseID}&name=${name}&stripeID=${stripeID}&carVin=${carVin}`, {
+      fetch(`${BASE_URL}/admin/admin-orders?page=${page}&limit=${pageLimit}&_id=${databaseID}&name=${name}&stripeID=${stripeID}&carVin=${carVin}`, {
               method: 'get',
               headers: {
                   'Accept': 'application/json, text/plain, */*',
-                  'Content-Type': 'application/json'
+                  'Content-Type': 'application/json',
+                  'Authorization':window.localStorage.getItem("tok")
               }
           }).then(res => res.json())
           .then(res => {

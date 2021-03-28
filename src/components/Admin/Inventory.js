@@ -18,7 +18,8 @@ import React, {
   import MenuItem from '@material-ui/core/MenuItem';
   import FormControl from '@material-ui/core/FormControl';
   import Select from '@material-ui/core/Select';
-  
+  import { useHistory } from "react-router-dom";
+import { BASE_URL } from '../../api/token';
   
   const useStyles = makeStyles((theme) => ({
     icon: {
@@ -54,6 +55,10 @@ import React, {
   
   
   let Inventory = () => {
+   const history = useHistory();
+   if (!localStorage.getItem("tok")){
+       history.push("/admin-portal")
+   }
     const [cars, setCars] = useState([])
     const [totalPages, setTotalPages] = useState(1)
     const [page, setPage] = useState(1)
@@ -63,11 +68,12 @@ import React, {
     const [carColor, setCarColor] = useState("")
 
     var getCars = () => {
-        fetch(`http://localhost:8080/cars/?page=${page}&limit=${pageLimit}&color=${carColor}&year=${carYear}`, {
+        fetch(`${BASE_URL}/cars/?page=${page}&limit=${pageLimit}&color=${carColor}&year=${carYear}`, {
                 method: 'get',
                 headers: {
                     'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    "Authorization":localStorage.getItem("tok")
                 }
             }).then(res => res.json())
             .then(res => {

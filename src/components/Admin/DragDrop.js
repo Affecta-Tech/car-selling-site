@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BASE_URL } from '../../api/token';
 import './styles.css';
 
 
@@ -46,9 +47,10 @@ const DropArea = (props,id) => {
   }
   const uploadFile = (formData,i,e)  => {
     const fetchData = async () => {
-      const result = await fetch(`http://localhost:8080/admin/upload_photo?id=${props.id}&name=${e.dataTransfer.files[i].name}`, {
+      const result = await fetch(`${BASE_URL}/admin/upload_photo?id=${props.id}&name=${e.dataTransfer.files[i].name}`, {
         headers: {
-          Accept: 'application/json'
+          Accept: 'application/json',
+          Authorization: localStorage.getItem("tok")
         },body: formData, method: "POST", credentials: 'same-origin'
       });
       let response = await result.json();

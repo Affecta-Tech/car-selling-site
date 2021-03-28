@@ -34,6 +34,7 @@ import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { blue, lightGreen, orange, purple, red, yellow } from '@material-ui/core/colors';
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
+import { BASE_URL } from '../../api/token';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -102,7 +103,7 @@ let Landing = () => {
   };
 
   var getCars = () => {
-      fetch(`http://localhost:8080/cars/?page=${page}&limit=${pageLimit}&color=${carColor}&year=${carYear}`, {
+      fetch(`${BASE_URL}/cars/?page=${page}&limit=${pageLimit}&color=${carColor}&year=${carYear}`, {
               method: 'get',
               headers: {
                   'Accept': 'application/json, text/plain, */*',

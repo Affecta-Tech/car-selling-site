@@ -12,6 +12,7 @@ import Container from '@material-ui/core/Container';
 import NavBar from '../NavBar/NavBar.js'
 import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
+import { BASE_URL } from "../../api/token"
 
 function Admin() {
   const useStyles = makeStyles((theme) => ({
@@ -44,13 +45,23 @@ function Copyright() {
   );
 }
 
+var authComplete = (res) => {
+  window.localStorage.setItem("tok", res.token)
+  history.push("/admin-orders")
+}
 
 var SubmitLogin = (e) => {
   e.preventDefault()
   setErrorMessage("")
   console.log(e.target.email.value)
   console.log(e.target.password.value)
-  submiter(e.target.email.value, e.target.password.value).then(res=>res.message==="Success"?history.push("/admin-orders"):setErrorMessage("Login Failed"))
+  submiter(e.target.email.value, e.target.password.value).then(res=>
+    res.message==="success"
+    ?
+    authComplete(res)
+    :
+    setErrorMessage("Login Failed")
+  )
   
 
 //   fetch(`http://localhost:8080/cars/admin`, {
@@ -68,16 +79,17 @@ var SubmitLogin = (e) => {
 }
 var submiter = (username,pw) => {
   const fetchData = async () => {
-    const result = await fetch(`http://localhost:8080/admin/admin`, {
+    const result = await fetch(`${BASE_URL}/admin/auth`, {
       headers: {
-        Accept: 'application/json, text/plain, */*',
+        'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({"username":username,
-      "pw":pw}),
+      "password":pw}),
       method: "POST", credentials: 'same-origin'
     });
     let response = await result.json();
+    console.log(response)
     return response
   }
   return fetchData()

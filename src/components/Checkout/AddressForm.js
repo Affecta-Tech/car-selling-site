@@ -1,14 +1,15 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
+import { BASE_URL } from '../../api/token';
 
 function AddressForm(props) {
   const [car, setCar] = React.useState()
   var getCars = () => {
-    fetch(`http://localhost:8080/cars/${props.id}`, {
+    fetch(`${BASE_URL}/cars/${props.id}`, {
             method: 'get',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             }
         }).then(res => res.json())
         .then(res => {

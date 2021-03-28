@@ -7,6 +7,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { Button } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import './styles.css';
+import { BASE_URL } from '../../api/token';
 
 function PaymentForm(props) {
   console.log(props.vin, props.price)
@@ -110,7 +111,7 @@ var submiter = (submission) => {
           }
 
         const fetchData = async () => {
-            const result = await fetch(`http://localhost:8080/stripe/charge`, {
+            const result = await fetch(`${BASE_URL}/stripe/charge`, {
               headers: {
                 Accept: 'application/json, text/plain, */*',
                 'Content-Type': 'application/json'

@@ -5,8 +5,13 @@ import AdminNavBar from './AdminNavBar'
 // import { makeStyles } from '@material-ui/core/styles';
 import Chart from "react-apexcharts";
 import './styles.css';
+import { useHistory } from "react-router-dom";
 
 function Dashboard() {
+  const history = useHistory();
+  if (!localStorage.getItem("tok")){
+      history.push("/admin-portal")
+  }
   // const useStyles = makeStyles((theme) => ({
   //   paper: {
   //     marginTop: theme.spacing(8),

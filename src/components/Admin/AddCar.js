@@ -5,8 +5,13 @@ import React, {
   import TextField from '@material-ui/core/TextField';
   import AdminNavBar from './AdminNavBar'
   import DragDrop from "./DragDrop"
-
+  import { useHistory } from "react-router-dom";
+  import { BASE_URL } from "../../api/token"
   function AddCar() {
+    const history = useHistory();
+    if (!localStorage.getItem("tok")){
+        history.push("/admin-portal")
+    }
     const [errorMessage, setErrorMessage] = useState(<p></p>)
     const [carID, setCarID] = useState("")
     var submitNewCar = (e) => {
@@ -42,13 +47,12 @@ import React, {
     }
     
     var submiter = (submission) => {
-
-            console.log(submission)
             const fetchData = async () => {
-                const result = await fetch(`http://localhost:8080/admin/add-car`, {
+                const result = await fetch(`${BASE_URL}/admin/add-car`, {
                   headers: {
-                    Accept: 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json'
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json',
+                    'Authorization':localStorage.getItem("tok")
                   },
                   body: JSON.stringify({
                   "make":submission.make.value,

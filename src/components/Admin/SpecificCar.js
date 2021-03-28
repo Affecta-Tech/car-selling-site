@@ -10,6 +10,7 @@ import React, {
   import DragDrop from "./DragDrop"
   import TextField from '@material-ui/core/TextField';
   import { useHistory } from "react-router-dom";
+  import { BASE_URL } from '../../api/token';
 
   
   const useStyles = makeStyles((theme) => ({
@@ -46,19 +47,23 @@ import React, {
 
   
   let Inventory = () => {
+    const history = useHistory();
+    if (!localStorage.getItem("tok")){
+        history.push("/admin-portal")
+    }
     let carID = window.location.search.split("id=")[1]
     const [car, setCar] = useState()
     const [deleteError, setDeleteError] = useState("")
     const [uploadError, setUploadError] = useState("")
     const [errorMessage, setErrorMessage] = useState(<p></p>)
-    const history = useHistory();
 
     var getCars = () => {
-        fetch(`http://localhost:8080/cars/${carID}`, {
+        fetch(`${BASE_URL}/cars/${carID}`, {
                 method: 'get',
                 headers: {
                     'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    "Authorization":localStorage.getItem("tok")
                 }
             }).then(res => res.json())
             .then(res => {
@@ -74,10 +79,11 @@ import React, {
 
     var deleteCar = (id) => {
         const fetchData = async () => {
-            const result = await fetch(`http://localhost:8080/cars/delete-car`, {
+            const result = await fetch(`${BASE_URL}/admin/delete-car`, {
               headers: {
                 Accept: 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Authorization":localStorage.getItem("tok")
               },
               body: JSON.stringify({"id":id}),
               method: "POST", credentials: 'same-origin'
@@ -94,10 +100,11 @@ import React, {
 
     var deleteAllImage = (id) => {
         const fetchData = async () => {
-            const result = await fetch(`http://localhost:8080/cars/delete-all-photos`, {
+            const result = await fetch(`${BASE_URL}/admin/delete-all-photos`, {
               headers: {
                 Accept: 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Authorization":localStorage.getItem("tok")
               },
               body: JSON.stringify({"id":id}),
               method: "POST", credentials: 'same-origin'
@@ -111,10 +118,11 @@ import React, {
     }
     var deleteImage = (img) => {
         const fetchData = async () => {
-            const result = await fetch(`http://localhost:8080/cars/delete-photo`, {
+            const result = await fetch(`${BASE_URL}/admin/delete-photo`, {
               headers: {
                 Accept: 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Authorization":localStorage.getItem("tok")
               },
               body: JSON.stringify({"photoURL":img}),
               method: "POST", credentials: 'same-origin'
@@ -224,10 +232,11 @@ import React, {
                 description = car.description
             }
             const fetchData = async () => {
-                const result = await fetch(`http://localhost:8080/admin/update/${car._id}`, {
+                const result = await fetch(`${BASE_URL}/admin/update/${car._id}`, {
                   headers: {
                     Accept: 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    "Authorization":localStorage.getItem("tok")
                   },
                   body: JSON.stringify({
                   "id":car._id,
@@ -250,7 +259,7 @@ import React, {
                   ),
                   method: "PUT", credentials: 'same-origin'
                 });
-                let response = await result;
+                let response = await result.json();
                 setDeleteError((response.message))
                 return response
               }
