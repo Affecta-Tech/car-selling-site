@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/car-selling-site/static/css/main.a7c812cc.chunk.css",
-    "main.js": "/car-selling-site/static/js/main.b7aec183.chunk.js",
-    "main.js.map": "/car-selling-site/static/js/main.b7aec183.chunk.js.map",
+    "main.js": "/car-selling-site/static/js/main.9e7e2a57.chunk.js",
+    "main.js.map": "/car-selling-site/static/js/main.9e7e2a57.chunk.js.map",
     "runtime-main.js": "/car-selling-site/static/js/runtime-main.64460734.js",
     "runtime-main.js.map": "/car-selling-site/static/js/runtime-main.64460734.js.map",
-    "static/js/2.469d86f7.chunk.js": "/car-selling-site/static/js/2.469d86f7.chunk.js",
-    "static/js/2.469d86f7.chunk.js.map": "/car-selling-site/static/js/2.469d86f7.chunk.js.map",
+    "static/js/2.5a4519e0.chunk.js": "/car-selling-site/static/js/2.5a4519e0.chunk.js",
+    "static/js/2.5a4519e0.chunk.js.map": "/car-selling-site/static/js/2.5a4519e0.chunk.js.map",
     "static/js/3.451bc024.chunk.js": "/car-selling-site/static/js/3.451bc024.chunk.js",
     "static/js/3.451bc024.chunk.js.map": "/car-selling-site/static/js/3.451bc024.chunk.js.map",
     "index.html": "/car-selling-site/index.html",
     "static/css/main.a7c812cc.chunk.css.map": "/car-selling-site/static/css/main.a7c812cc.chunk.css.map",
-    "static/js/2.469d86f7.chunk.js.LICENSE.txt": "/car-selling-site/static/js/2.469d86f7.chunk.js.LICENSE.txt"
+    "static/js/2.5a4519e0.chunk.js.LICENSE.txt": "/car-selling-site/static/js/2.5a4519e0.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.64460734.js",
-    "static/js/2.469d86f7.chunk.js",
+    "static/js/2.5a4519e0.chunk.js",
     "static/css/main.a7c812cc.chunk.css",
-    "static/js/main.b7aec183.chunk.js"
+    "static/js/main.9e7e2a57.chunk.js"
   ]
 }
