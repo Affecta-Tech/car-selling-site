@@ -2,7 +2,7 @@
   "name": "car-selling-site",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://affecta-tech.github.io/car-selling-site/",
+  "homepage": "https://Affecta-Tech.github.io/car-selling-site/",
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/data-grid": "^4.0.0-alpha.20",
