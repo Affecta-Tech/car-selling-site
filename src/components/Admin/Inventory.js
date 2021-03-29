@@ -19,7 +19,7 @@ import React, {
   import FormControl from '@material-ui/core/FormControl';
   import Select from '@material-ui/core/Select';
   import { useHistory } from "react-router-dom";
-import { BASE_URL } from '../../api/token';
+import { BASE_URL, SPECIFIC_CAR } from '../../api/token';
   
   const useStyles = makeStyles((theme) => ({
     icon: {
@@ -249,7 +249,7 @@ import { BASE_URL } from '../../api/token';
                      </Typography> */}
                     </CardContent>
                     <CardActions>
-                    <Link autoFocus color="" to={{
+                    <Link autoFocus color="" onClick={() => {SPECIFIC_CAR=item._id}} to={{
                               pathname: "/admin-specific-car",
                               search: `?id=${item._id}`,}}>
                        <Button variant="outlined" color="primary" >

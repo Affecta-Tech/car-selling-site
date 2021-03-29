@@ -10,7 +10,7 @@ import React, {
   import DragDrop from "./DragDrop"
   import TextField from '@material-ui/core/TextField';
   import { useHistory } from "react-router-dom";
-  import { BASE_URL } from '../../api/token';
+  import { BASE_URL,SPECIFIC_CAR } from '../../api/token';
 
   
   const useStyles = makeStyles((theme) => ({
@@ -51,8 +51,8 @@ import React, {
     if (!localStorage.getItem("tok")){
         history.push("/admin-portal")
     }
-    console.log(window.location.search)
-    let carID = window.location.search.split("id=")[1]
+    // let carID = window.location.search.split("id=")[1]
+    let carID = SPECIFIC_CAR
     const [car, setCar] = useState()
     const [deleteError, setDeleteError] = useState("")
     const [uploadError, setUploadError] = useState("")
