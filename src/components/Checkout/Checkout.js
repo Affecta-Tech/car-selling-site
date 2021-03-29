@@ -71,10 +71,13 @@ const steps = ['Confirm Car', 'Payment details', 'Reciept'];
 
 
 function Checkout() {
-  console.log(window.location.search)
-  let carID = window.location.search.split("?id=")[1].split("&vin=")[0]
-  let carVin = window.location.search.split("&vin=")[1].split("&price=")[0]
-  let carPrice = window.location.search.split("&price=")[1]
+  // console.log(window.location.search)
+  // let carID = window.location.search.split("?id=")[1].split("&vin=")[0]
+  // let carVin = window.location.search.split("&vin=")[1].split("&price=")[0]
+  // let carPrice = window.location.search.split("&price=")[1]
+  let carID = localStorage.getItem('spec-id')
+  let carVin = localStorage.getItem('spec-vin')
+  let carPrice = localStorage.getItem('spec-price')
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -151,13 +154,7 @@ function Checkout() {
                   </Button>
                   :
                   activeStep === 1?
-                  <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                >
-                  Place Order
-                </Button>
+                  <div></div>
                 :
                 activeStep === 2?
                 <div>

@@ -96,6 +96,9 @@ let Landing = () => {
   const [carColor, setCarColor] = useState("")
   const [open, setOpen] = useState(false);
 
+  localStorage.removeItem('spec-id')
+  localStorage.removeItem('spec-vin')
+  localStorage.removeItem('spec-price')
 
   const handleClose = () => {
       setCarImageNum(1)
@@ -123,7 +126,11 @@ let Landing = () => {
   }
   
   const classes = useStyles();
-
+  const changeID = (carList) => {
+     localStorage.setItem('spec-id',carList._id)
+     localStorage.setItem('spec-vin',carList.vin)
+     localStorage.setItem('spec-price',carList.price.$numberDecimal)
+  }
   const pageLimitChange = (event) => {
       setPageLimit(event.target.value);
   }
@@ -360,7 +367,7 @@ let Landing = () => {
                            className="buyBtn"
                            autoFocus 
                            onClick={() =>
-                              {setOpen(false);setCarImageNum(1)}} to={{
+                              {setOpen(false);setCarImageNum(1);changeID(listing)}} to={{
                               pathname: '/checkout',
                               search: `?id=${listing._id}&vin=${listing.vin}&price=${listing.price.$numberDecimal}`,}}
                               >
