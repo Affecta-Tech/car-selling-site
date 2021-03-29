@@ -51,6 +51,7 @@ import React, {
     if (!localStorage.getItem("tok")){
         history.push("/admin-portal")
     }
+    console.log(window.location.search)
     let carID = window.location.search.split("id=")[1]
     const [car, setCar] = useState()
     const [deleteError, setDeleteError] = useState("")
