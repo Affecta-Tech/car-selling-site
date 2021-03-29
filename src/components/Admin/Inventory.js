@@ -19,7 +19,7 @@ import React, {
   import FormControl from '@material-ui/core/FormControl';
   import Select from '@material-ui/core/Select';
   import { useHistory } from "react-router-dom";
-import { BASE_URL, SPECIFIC_CAR } from '../../api/token';
+import { BASE_URL } from '../../api/token';
   
   const useStyles = makeStyles((theme) => ({
     icon: {
@@ -59,6 +59,7 @@ import { BASE_URL, SPECIFIC_CAR } from '../../api/token';
    if (!localStorage.getItem("tok")){
        history.push("/admin-portal")
    }
+   localStorage.removeItem("spec-car");
     const [cars, setCars] = useState([])
     const [totalPages, setTotalPages] = useState(1)
     const [page, setPage] = useState(1)
@@ -89,7 +90,7 @@ import { BASE_URL, SPECIFIC_CAR } from '../../api/token';
     
     const classes = useStyles();
     const changeID = (id) => {
-      SPECIFIC_CAR = id
+       localStorage.setItem("spec-car",id);
     }
     const pageLimitChange = (event) => {
         setPageLimit(event.target.value);
