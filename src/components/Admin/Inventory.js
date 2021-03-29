@@ -88,7 +88,9 @@ import { BASE_URL, SPECIFIC_CAR } from '../../api/token';
     }
     
     const classes = useStyles();
-  
+    const changeID = (id) => {
+      SPECIFIC_CAR = id
+    }
     const pageLimitChange = (event) => {
         setPageLimit(event.target.value);
     }
@@ -249,7 +251,7 @@ import { BASE_URL, SPECIFIC_CAR } from '../../api/token';
                      </Typography> */}
                     </CardContent>
                     <CardActions>
-                    <Link autoFocus color="" onClick={() => {SPECIFIC_CAR=item._id}} to={{
+                    <Link autoFocus color="" onClick={() => {changeID(item._id)}} to={{
                               pathname: "/admin-specific-car",
                               search: `?id=${item._id}`,}}>
                        <Button variant="outlined" color="primary" >
