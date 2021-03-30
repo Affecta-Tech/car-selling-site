@@ -152,10 +152,10 @@ let Landing = () => {
       <div className={classes.heroContent}>
          <Container maxWidth="sm">
             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-               WE SELL CARS
+               Teigland Road
             </Typography>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
-               You can buy a car from us... wow!
+               That's right, we sell cars, Wow!
             </Typography>
             <div className={classes.heroButtons}>
                <Grid container spacing={2} justify="center">
